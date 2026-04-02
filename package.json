@@ -1,0 +1,27 @@
+{
+  "name": "chai-backend",
+  "version": "1.0.0",
+  "description": "a basic app to deploy",
+  "keywords": [
+    "node"
+  ],
+  "homepage": "https://github.com/sanjeetkumarcodethrust/chai-backend#readme",
+  "bugs": {
+    "url": "https://github.com/sanjeetkumarcodethrust/chai-backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanjeetkumarcodethrust/chai-backend.git"
+  },
+  "license": "ISC",
+  "author": "Sanjeet Kumar",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.0",
+    "express": "^5.2.1"
+  }
+}
