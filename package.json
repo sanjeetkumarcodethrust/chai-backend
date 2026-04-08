@@ -16,13 +16,18 @@
   "license": "ISC",
   "author": "Sanjeet Kumar",
   "type": "module",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "build": "node --check src/index.js && node --check src/app.js && node --check src/db/index.js && node --check index.js"
   },
   "dependencies": {
-    "dotenv": "^17.4.0",
-    "express": "^5.2.1"
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.1",
+    "express": "^5.2.1",
+    "mongoose": "^9.4.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.14",
