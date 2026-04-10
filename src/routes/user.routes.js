@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { 
+import {
     loginUser, 
     logoutUser, 
     registerUser, 
@@ -13,10 +13,13 @@ import {
     updateAccountDetails
 } from "../controllers/user.controller.js";
 import {upload} from "../middlewares/multer.middleware.js"
+import { requireDbConnection } from "../middlewares/db.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 
 const router = Router()
+
+router.use(requireDbConnection)
 
 router.route("/register").post(
     upload.fields([

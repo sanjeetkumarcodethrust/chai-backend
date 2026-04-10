@@ -36,13 +36,22 @@ const registerUser = asyncHandler( async (req, res) => {
     // return res
 
 
-    const {fullName, email, username, password } = req.body
-    //console.log("email: ", email);
+    const fullName = req.body?.fullName?.trim()
+    const email = req.body?.email?.trim()
+    const username = req.body?.username?.trim()
+    const password = req.body?.password?.trim()
 
-    if (
-        [fullName, email, username, password].some((field) => field?.trim() === "")
-    ) {
-        throw new ApiError(400, "All fields are required")
+    const missingFields = [
+        ["fullName", fullName],
+        ["email", email],
+        ["username", username],
+        ["password", password]
+    ]
+        .filter(([, value]) => !value)
+        .map(([field]) => field)
+
+    if (missingFields.length > 0) {
+        throw new ApiError(400, `Missing required field(s): ${missingFields.join(", ")}`)
     }
 
     const existedUser = await User.findOne({
@@ -54,8 +63,7 @@ const registerUser = asyncHandler( async (req, res) => {
     }
     //console.log(req.files);
 
-    const avatarLocalPath = req.files?.avatar[0]?.path;
-    //const coverImageLocalPath = req.files?.coverImage[0]?.path;
+    const avatarLocalPath = Array.isArray(req.files?.avatar) ? req.files.avatar[0]?.path : undefined;
 
     let coverImageLocalPath;
     if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0) {
@@ -68,10 +76,10 @@ const registerUser = asyncHandler( async (req, res) => {
     }
 
     const avatar = await uploadOnCloudinary(avatarLocalPath)
-    const coverImage = await uploadOnCloudinary(coverImageLocalPath)
+    const coverImage = coverImageLocalPath ? await uploadOnCloudinary(coverImageLocalPath) : null
 
-    if (!avatar) {
-        throw new ApiError(400, "Avatar file is required")
+    if (!avatar?.url) {
+        throw new ApiError(500, "Avatar upload failed")
     }
    
 
@@ -297,7 +305,7 @@ const updateUserAvatar = asyncHandler(async(req, res) => {
 
     const avatar = await uploadOnCloudinary(avatarLocalPath)
 
-    if (!avatar.url) {
+    if (!avatar?.url) {
         throw new ApiError(400, "Error while uploading on avatar")
         
     }
@@ -331,7 +339,7 @@ const updateUserCoverImage = asyncHandler(async(req, res) => {
 
     const coverImage = await uploadOnCloudinary(coverImageLocalPath)
 
-    if (!coverImage.url) {
+    if (!coverImage?.url) {
         throw new ApiError(400, "Error while uploading on avatar")
         
     }

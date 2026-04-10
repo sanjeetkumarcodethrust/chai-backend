@@ -26,7 +26,7 @@ const uploadOnCloudinary = async (localFilePath) => {
         }
 
         if (!isCloudinaryConfigured()) {
-            throw new Error("Cloudinary environment variables are incomplete.");
+            throw new Error("Cloudinary is not configured. Set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET.");
         }
 
         cloudinary.config(getCloudinaryConfig());
@@ -39,8 +39,7 @@ const uploadOnCloudinary = async (localFilePath) => {
         return response;
     } catch (error) {
         removeLocalFile(localFilePath);
-        console.error("Cloudinary upload failed:", error.message);
-        return null;
+        throw new Error(`Cloudinary upload failed: ${error.message}`);
     }
 };
 

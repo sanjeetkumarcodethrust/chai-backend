@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 
 import { DB_NAME } from "../constants.js";
 
+mongoose.set("bufferCommands", false);
+
 const getMongoUri = () => process.env.MONGODB_URI?.trim();
 
 const buildMongoUri = (mongoUri) => {
