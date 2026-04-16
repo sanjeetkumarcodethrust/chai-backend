@@ -1,4 +1,5 @@
 import mongoose, {Schema} from "mongoose";
+import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 const videoSchema = new Schema(
     {
@@ -40,8 +41,7 @@ const videoSchema = new Schema(
         timestamps: true
     }
 )
-// videoSchema.pre("save", function(next) {
-//     if (this.isModified("videoFile") || this.isModified("thumbnail")) {
-//         // Logic to upload the video and thumbnail to Cloudinary and get the URLs
+
+videoSchema.plugin(mongooseAggregatePaginate)
 
 export const Video = mongoose.model("Video", videoSchema)
