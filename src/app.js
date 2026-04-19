@@ -43,3 +43,4 @@ app.use("/api/v1/dashboard", dashboardRouter)
 app.use(errorHandler)
 
 export { app }
+// http://localhost:8000/api/v1/users/register
