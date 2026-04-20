@@ -165,6 +165,7 @@ const loginUser = asyncHandler(async (req, res) =>{
     )
 
 })
+// http://localhost:8000/api/v1/users/logout
 
 const logoutUser = asyncHandler(async(req, res) => {
     await User.findByIdAndUpdate(
